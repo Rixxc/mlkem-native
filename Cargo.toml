@@ -1,0 +1,23 @@
+[package]
+name = "mlkem-native-rs"
+description = "mlkem-native-rs is a wrapper around mlkem-native is a secure, fast, and portable C90 implementation of ML-KEM"
+repository = "https://github.com/pq-code-package/mlkem-native"
+license = "Apache-2.0"
+build = "bindings/rust/mlkem-native-rs/build.rs"
+version = "0.1.0"
+edition = "2021"
+exclude = ["examples/**"]
+
+[dependencies]
+rand_core = "0.9.3"
+thiserror = "2.0.12"
+
+[build-dependencies]
+bindgen = "0.71.1"
+make-cmd = "0.1.0"
+
+[dev-dependencies]
+rand = "0.9.0"
+
+[lib]
+path = "bindings/rust/mlkem-native-rs/src/lib.rs"
