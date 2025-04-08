@@ -9,10 +9,10 @@ edition = "2021"
 exclude = ["examples/**"]
 
 [dependencies]
-rand_core = "0.9.3"
+rand_core = { version = "0.9.3", default-features = false }
 
 [dev-dependencies]
-rand = "0.9.0"
+rand = { version = "0.9.0", default-features = false, features = ["os_rng"] }
 
 [lib]
 path = "bindings/rust/mlkem-native-rs/src/lib.rs"
