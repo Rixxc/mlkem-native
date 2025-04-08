@@ -1,6 +1,11 @@
+#![allow(non_upper_case_globals)]
+#![allow(non_camel_case_types)]
+#![allow(non_snake_case)]
+#![allow(unused)]
+
+use core::fmt;
 use rand_core::TryCryptoRng;
-use std::default::Default;
-use thiserror::Error;
+use std::{default::Default, error::Error};
 
 mod unsafe_bindings_level2;
 mod unsafe_bindings_level3;
@@ -23,13 +28,26 @@ pub unsafe extern "C" fn randombytes(
     panic!("");
 }
 
-#[derive(Error, Debug)]
+#[derive(Debug)]
 pub enum MLKEMNativeError {
-    #[error("the CSRNG failed due to insufficent entropy")]
     InsufficentEntropy,
-    #[error("the library function encountered an internal error")]
     LibraryError,
 }
+
+impl fmt::Display for MLKEMNativeError {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        match self {
+            MLKEMNativeError::InsufficentEntropy => {
+                write!(f, "the CSRNG failed due to insufficent entropy")
+            }
+            MLKEMNativeError::LibraryError => {
+                write!(f, "the library function encountered an internal error")
+            }
+        }
+    }
+}
+
+impl Error for MLKEMNativeError {}
 
 macro_rules! reexport_const {
     ( $type_name:ident, $struct_name:ident ) => {
